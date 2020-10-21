@@ -1,0 +1,84 @@
+header{
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+}
+
+
+.display-arms{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#products li{
+    width: 30vw;
+    height: 30vw;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding-left: 10px;
+    background-color: #c6facda4;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+button{
+    width: 15vw;
+    height: 5vw;
+    border-radius: 2vw;
+    border-width: 0px;
+    background-color: #c6facda4;
+}
+
+form{
+    background-color: #ffffffa4;
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    height: auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 2rem;
+    margin-top: 10px;
+}
+
+form input{
+    border-width: 0px;
+    font-size: 1.5rem;
+    background-color: aliceblue;
+}
+
+.input-arms{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+
+div{
+    display: flex;
+}
+
+.upper-block{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    background-color: #c6facda4;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.upper-block span{
+    display: flex;
+}
+
+.hero{
+    display: flex;
+    justify-content: center;
+    background-color: #c6facda4;
+    margin-bottom: 20px;
+}
+

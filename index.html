@@ -3,36 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Lab 3</title>
+    <link rel="stylesheet" href="css/style.css" />
   </head>
 
   <body>
-      <script src="js/app.js"></script>
-    <section>
-      <button>Sort</button>
-      <button>Count</button>
-      <button>Create Arm</button>
+    <section class="hero">
+      <h2>Hey comrad! Welcome to military base!</h2>
     </section>
+    <header>
+      <p>Filter by operation crew, how many men do you have?</p>
+      <input
+        type="number"
+        name="maximum-filter"
+        id=""
+        onchange="displayFiltered()"
+      />
+    </header>
+    <section class="upper-block">
+      <div>
+      <label for="">Sort by entity? </label>
+      <input type="checkbox" name="sort-filter" id="" onclick="sortFilter()" /> </div>
+      <div>
+      <label for="">I'm a general </label>
+      <input type="checkbox" name="tick-filter" id="" onclick="tickFilter()" />
+      </div>
+    <span id="amount">Hello</span>
+    </section>
+
     <section>
-      <div class="display-arms">
-          <ul>
-              <li class="arm-frame">
-                  <p>Name</p>
-                  <p>Serial number</p>
-                  <p>Country of origin </p>
-              </li>
-          </ul>
+      <div class="input-arms">
+        <form>
+          <label>Name</label> <input type="text" name="name" onfocus="this.value=''"/>
+          <label>Serial Num</label> <input type="text" name="serial"  onfocus="this.value=''"/>
+          <label>Country of origin</label> <input type="text" name="country"  onfocus="this.value=''"/>
+          <label>Operation Crew</label> <input type="text" name="crew"  onfocus="this.value=''"/>
+          <label>Count on the base</label> <input type="text" name="stack"  onfocus="this.value=''" />
+        </form>
+        <button id="create" onclick="addAnArm()">Create Arm</button>
+        <button id="delete" onclick="clearBase()">Destroy the base!</button>
       </div>
     </section>
+    <script src="/js/app.js"></script>
+
     <section>
-        <div class="input-arms">
-            <form>
-                <label>Name</label> <input type="text" name="name">
-                <label>Serial Num</label> <input type="text" name="serial">
-                <label>Country of origin</label> <input type="text" name="country">
-            </form>
-        </div>
-      </section>
+      <div class="display-arms">
+        <ul id="products">
+          <li class="arm-frame">
+            <p>Name</p>
+            <p>Serial number</p>
+            <p>Country of origin</p>
+          </li>
+        </ul>
+      </div>
+    </section>
   </body>
 </html>
