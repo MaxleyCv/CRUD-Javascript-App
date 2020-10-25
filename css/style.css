@@ -18,6 +18,10 @@ header{
 
 }
 
+.shit{
+    display: none;
+}
+
 .modal {
     display: none;
     position: fixed;

@@ -1,6 +1,8 @@
 var displayfilter = false;
 var displaysorted = false;
 
+displayItems();
+
 function tickFilter() {
   displayfilter = document.getElementsByName("tick-filter")[0].checked;
 
@@ -46,6 +48,8 @@ function addAnArm() {
     newArm["operationCrew"] = "0";
   else newArm["operationCrew"] = document.getElementsByName("crew")[0].value;
   newArm["countOnBase"] = document.getElementsByName("stack")[0].value;
+
+  document.getElementById("shit").click();
 
   localStorage.setItem(newArm["serialNumber"], JSON.stringify(newArm));
 

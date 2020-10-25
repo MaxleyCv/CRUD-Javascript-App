@@ -37,24 +37,26 @@
         <button onclick="searchtime()">Search!</button>
         </div>
     </section>
+
     <section>
-      <div id="edit-modal" class="modal">
-        <!--   Modal content   -->
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <p>Oops! Something went wrong. Please try again.</p>
-        </div>
-      </div>
       <div class="input-arms">
         <form id="form">
           <label>Name</label> <input type="text" name="name" onfocus="this.value=''"/>
           <label>Serial Num</label> <input type="text" name="serial"  onfocus="this.value=''"/>
           <label>Country of origin</label> <input type="text" name="country"  onfocus="this.value=''"/>
-          <label>Operation Crew</label> <input type="number" name="crew"  onfocus="this.value=''"  required min="200" max="203"/>
-          <label>Count on the base</label> <input type="text" name="stack"  onfocus="this.value=''" />
+          <label>Operation Crew</label> <input type="number" name="crew"  onfocus="this.value=''" required min=12 max=233/>
+          <label>Count on the base</label> <input type="number" name="stack"  onfocus="this.value=''" />
+          <input type="submit" class="shit" id="shit">
         </form>
         <button id="create" onclick="addAnArm()">Create Arm</button>
         <button id="delete" onclick="clearBase()">Destroy the base!</button>
+        <div id="edit-modal" class="modal">
+          <!--   Modal content   -->
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Oops! Something went wrong. Please try again.</p>
+          </div>
+        </div>
       </div>
     </section>
     <script src="/js/app.js"></script>
