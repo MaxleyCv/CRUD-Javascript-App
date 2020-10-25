@@ -17,27 +17,40 @@
         type="number"
         name="maximum-filter"
         id=""
-        onchange="displayFiltered()"
+        onchange="displayItems()"
       />
     </header>
     <section class="upper-block">
       <div>
       <label for="">Sort by entity? </label>
-      <input type="checkbox" name="sort-filter" id="" onclick="sortFilter()" /> </div>
+      <input type="checkbox" name="sort-filter" onclick="sortFilter()" /> </div>
       <div>
       <label for="">I'm a general </label>
-      <input type="checkbox" name="tick-filter" id="" onclick="tickFilter()" />
+      <input type="checkbox" name="tick-filter" onclick="tickFilter()" />
       </div>
     <span id="amount">Hello</span>
     </section>
-
     <section>
+      <div class = "srch">
+        <label for="">Search by name</label>
+        <input type="text" id="nsearch" />
+        <button onclick="searchtime()">Search!</button>
+        </div>
+    </section>
+    <section>
+      <div id="edit-modal" class="modal">
+        <!--   Modal content   -->
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p>Oops! Something went wrong. Please try again.</p>
+        </div>
+      </div>
       <div class="input-arms">
-        <form>
+        <form id="form">
           <label>Name</label> <input type="text" name="name" onfocus="this.value=''"/>
           <label>Serial Num</label> <input type="text" name="serial"  onfocus="this.value=''"/>
           <label>Country of origin</label> <input type="text" name="country"  onfocus="this.value=''"/>
-          <label>Operation Crew</label> <input type="text" name="crew"  onfocus="this.value=''"/>
+          <label>Operation Crew</label> <input type="number" name="crew"  onfocus="this.value=''"  required min="200" max="203"/>
           <label>Count on the base</label> <input type="text" name="stack"  onfocus="this.value=''" />
         </form>
         <button id="create" onclick="addAnArm()">Create Arm</button>
@@ -49,11 +62,11 @@
     <section>
       <div class="display-arms">
         <ul id="products">
-          <li class="arm-frame">
+          <!-- <li class="arm-frame">
             <p>Name</p>
             <p>Serial number</p>
             <p>Country of origin</p>
-          </li>
+          </li> -->
         </ul>
       </div>
     </section>
