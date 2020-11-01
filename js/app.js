@@ -152,14 +152,22 @@ async function allStorage() {
 function clearInput() {
   var inputs = document.getElementsByTagName("input");
   var i = inputs.length;
-  while (--i) {
+  while (i--) {
     document.getElementsByTagName("input")[i].textContent = "";
   }
 }
 
-function clearBase() {
-  localStorage.clear();
-  clearItems();
+async function clearBase() {
+  var items = await allStorage();
+  var i = items.length;
+  while (i--){
+    await fetch("http://127.0.0.1:5000/arm/" + JSON.parse(items[i])["name"], {
+      method: "DELETE", 
+    }).then(res => {
+      console.log("Request complete! response:", res);
+    }).catch((error) => console.log(error));
+  }
+  displayItems();
 }
 
 async function searchtime() {
@@ -184,7 +192,7 @@ function renderFrame(someObj){
     }    
     if (displayfilter){
       let i = someObj.length;
-      while (--i){
+      while (i--){
       if (someObj["operationCrew"] > document.getElementsByName("maximum-filter")[0].value){
         someObj.splice(i, 1);
       }
@@ -274,6 +282,9 @@ function saveItem(id){
   document.getElementsByName("crew")[0].value = " ";
   document.getElementsByName("stack")[0].value = " ";
   document.getElementById("create").textContent = "Create Arm";
+
+  document.getElementById("shit").click();
+
   displayItems();
 }
 
