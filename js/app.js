@@ -26,40 +26,54 @@ function sortFilter() {
   displayItems();
 }
 
-function weaponCounter() {
-  var items = allStorage();
-  var i = items.length;
+async function weaponCounter() {
+  var items = await allStorage();
+  var i = items.length + 1;
   var counter = 0;
   while (--i) {
-    if (isNaN(parseInt(JSON.parse(items[i])["countOnBase"], 10))) continue;
-    counter += parseInt(JSON.parse(items[i])["countOnBase"], 10);
+    console.log(items[i]);
+    if (isNaN(JSON.parse(items[i - 1])["countOnBase"])) continue;
+    counter += JSON.parse(items[i - 1])["countOnBase"];
   }
   document.getElementById("amount").textContent =
     "Total weapon amount: " + counter.toString();
 }
 
-function addAnArm() {
+document.getElementById("shit").addEventListener("click", (event) => {
+  event.preventDefault();})
+
+async function addAnArm() {
   clearItems();
   var newArm = {};
-  newArm["name"] = document.getElementsByName("name")[0].value;
-  newArm["serialNumber"] = document.getElementsByName("serial")[0].value;
-  newArm["countryOfOrigin"] = document.getElementsByName("country")[0].value;
+  // newArm["name"] = document.getElementsByName("name")[0].value;
+  newArm["serial_number"] = document.getElementsByName("serial")[0].value;
+  newArm["country_of_origin"] = document.getElementsByName("country")[0].value;
   if (document.getElementsByName("crew")[0].value == "")
-    newArm["operationCrew"] = "0";
-  else newArm["operationCrew"] = document.getElementsByName("crew")[0].value;
-  newArm["countOnBase"] = document.getElementsByName("stack")[0].value;
+    newArm["operation_crew_count"] = "0";
+  else newArm["operation_crew_count"] = document.getElementsByName("crew")[0].value;
+  newArm["count_in_stack"] = document.getElementsByName("stack")[0].value;
+
+  console.log(JSON.stringify(newArm));
 
   document.getElementById("shit").click();
 
-  localStorage.setItem(newArm["serialNumber"], JSON.stringify(newArm));
+  fetch("http://127.0.0.1:5000/arm", {
+    method: "POST", 
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(newArm)
+  }).then(res => {
+    console.log("Request complete! response:", res);
+  }).catch((error) => console.log(error));
 
   displayItems();
 
   clearInput();
 }
 
-function displayItems() {
-  var items = allStorage();
+async function displayItems() {
+  var items = await allStorage();
   var i = items.length;
   result = [];
 
@@ -72,7 +86,7 @@ function displayItems() {
   renderFrame(result);
 }
 
-//Some magic
+
 function srtfary(list) {
   let lengt = list.length;
   var rngidx = lengt;
@@ -107,14 +121,32 @@ function clearItems() {
   }
 }
 
-function allStorage() {
-  var values = [],
-    keys = Object.keys(localStorage),
-    i = keys.length;
+async function allStorage() {
+  var values = [];
+  var keya = [];
+
+  const res = await fetch("http://127.0.0.1:5000/arms");
+  const data = await res.json();
+  values = data;
+  console.log(data);
+  
+  console.log(values);
+
+  let i = values.length;
+
   while (i--) {
-    values.push(localStorage.getItem(keys[i]));
+    let newArm = {}
+    newArm["name"] =values[i]["id"];
+    newArm["serialNumber"] = values[i]["_serial_number"];
+    newArm["countryOfOrigin"] = values[i]["_country_of_origin"];
+    newArm["operationCrew"] = values[i]["_operation_crew_count"];
+    newArm["countOnBase"] = values[i]["_count_in_stack"];
+    let someArm = JSON.stringify(newArm);
+    keya.push(someArm);
+    console.log(someArm);
   }
-  return values;
+
+  return keya;
 }
 
 function clearInput() {
@@ -130,8 +162,8 @@ function clearBase() {
   clearItems();
 }
 
-function searchtime() {
-  var items = allStorage();
+async function searchtime() {
+  var items = await allStorage();
   var i = items.length;
   let inputBoxName = document.getElementById("nsearch").value;
   let result = [];
@@ -190,18 +222,25 @@ function renderFrame(someObj){
     }
 }
 
-function edit(id){
+async function edit(id){
+  const res = await fetch("http://127.0.0.1:5000/arms");
+  const data = await res.json();
 
-  let newArm = JSON.parse(localStorage.getItem(id));
+  let newArm2 = {}
+    newArm2["name"] =data[0]["id"];
+    newArm2["serialNumber"] = data[0]["_serial_number"];
+    newArm2["countryOfOrigin"] = data[0]["_country_of_origin"];
+    newArm2["operationCrew"] = data[0]["_operation_crew_count"];
+    newArm2["countOnBase"] = data[0]["_count_in_stack"];
 
-  if (newArm != null) {
-  document.getElementsByName("name")[0].value = newArm["name"];
-  document.getElementsByName("serial")[0].value = newArm["serialNumber"];
-  document.getElementsByName("country")[0].value = newArm["countryOfOrigin"];
-  document.getElementsByName("crew")[0].value = newArm["operationCrew"]
-  document.getElementsByName("stack")[0].value = newArm["countOnBase"];
+  if (newArm2 != null) {
+  document.getElementsByName("name")[0].value = newArm2["name"];
+  document.getElementsByName("serial")[0].value = newArm2["serialNumber"];
+  document.getElementsByName("country")[0].value = newArm2["countryOfOrigin"];
+  document.getElementsByName("crew")[0].value = newArm2["operationCrew"]
+  document.getElementsByName("stack")[0].value = newArm2["countOnBase"];
 
-  setSave(id);
+  setSave(newArm2["name"]);
   }
 }
 
@@ -213,14 +252,29 @@ function setSave(id){
 }
 
 function saveItem(id){
-  localStorage.removeItem(id);
-  addAnArm();
+  let newArm = {};
+  newArm["serial_number"] = document.getElementsByName("serial")[0].value;
+  newArm["country_of_origin"] = document.getElementsByName("country")[0].value;
+  if (document.getElementsByName("crew")[0].value == "")
+    newArm["operation_crew_count"] = "0";
+  else newArm["operation_crew_count"] = document.getElementsByName("crew")[0].value;
+  newArm["count_in_stack"] = document.getElementsByName("stack")[0].value;
+  fetch("http://127.0.0.1:5000/arm/" + id.toString(), {
+    method: "PUT", 
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(newArm)
+  }).then(res => {
+    console.log("Request complete! response:", res);
+  }).catch((error) => console.log(error));
   document.getElementsByName("name")[0].value = " ";
   document.getElementsByName("serial")[0].value = " ";
   document.getElementsByName("country")[0].value = " ";
   document.getElementsByName("crew")[0].value = " ";
   document.getElementsByName("stack")[0].value = " ";
   document.getElementById("create").textContent = "Create Arm";
+  displayItems();
 }
 
 document.getElementById("form").addEventListener('invalid', (function () {
